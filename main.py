@@ -15,77 +15,99 @@ class Neutral:
     def __init__(self, foodSupply, lifeCount):
         self.foodSupply = foodSupply
         self.lifeCount = lifeCount
-
-    def moveToTree(self):
-        j = n.lifeCount
-        while j >= 0:
-            t.randomTree()
-            t.genRandomFood()
-            n.foodSupply += t.food 
-            j -= 1
-            
     
-    def surviveAndReplicate(self):
-        cache = n.foodSupply - n.lifeCount
-        if cache < 0:
-            n.foodSupply + n.lifeCount
-            n.foodSupply = 0
+    def moveToTreeN(self):
+        i = n.lifeCount
+        while i > 0:
+            rand = random.randint(0, 49)
+            n.foodSupply += t.listOfTreesAndFood[rand]
+            t.listOfTreesAndFood[rand] = 0
+            i -= 1
+
+    def surviveAndReplicateN(self):
+        diffBtwFood = n.foodSupply - n.lifeCount
+        if diffBtwFood < 0:
+            n.lifeCount += diffBtwFood
+            diffBtwFood = 0
         else:
             replicationNeed = n.foodSupply / 5
             n.lifeCount += replicationNeed
-
-
+            diffBtwFood = 0
 
 class Hostile:
     def __init__(self, foodSupply, killCount, lifeCount):
         self.foodSupply = foodSupply
         self.killCount = killCount
         self.lifeCount = lifeCount
+        
+    def moveToTreeH(self):
+        i = n.lifeCount
+        while i > 0:
+            rand = random.randint(0, 49)
+            h.foodSupply += t.listOfTreesAndFood[rand]
+            t.listOfTreesAndFood[rand] = 0
+            i -= 1
+
+    def surviveAndReplicateH(self):
+        cache = h.foodSupply - h.lifeCount
+        if cache < 0:
+            h.foodSupply + h.lifeCount
+            h.foodSupply = 0
+        else:
+            replicationNeed = h.foodSupply / 5
+            h.lifeCount += replicationNeed
 
 class Tree:
-    def __init__(self, food):
-        self.food = food
+    def __init__(self, listOfTreesAndFood):
+        self.listOfTreesAndFood = listOfTreesAndFood
 
-    def genRandomFood(self):
-        rand = random.randint(1, 7)
-        randFood = rand
-        self.food = randFood
-    
+    def genTreesAndFood(self):
+        i = 0 
+        for i in range(50):
+            rand = random.randint(1, 7)
+            t.listOfTreesAndFood.append(rand)
+            i += 1
 
-    def randomTree(self):
-        rand2 = random.randint(0, 50)
-        n = rand2
-        treeID = listOfTrees[n - 1]
-      
+def genTreesAndFood():
+    t.genTreesAndFood()
 
-listOfTrees = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50)
+def moveToTreeN():
+    n.moveToTreeN()
 
-def genRandomFood():
-    t.genRandomFood()
+def surviveAndReplicateN():
+    n.surviveAndReplicateN()
 
-def randomTree():
-    t.randomTree()
+def moveToTreeH():
+    h.moveToTreeH()
 
-def moveToTree():
-    n.moveToTree()
+def surviveAndReplicateH():
+    h.surviveAndReplicateH()
 
-def surviveAndReplicate():
-    n.surviveAndReplicate()
+def setTreesBack():
+    t.setTreesBack()
 
 if __name__ == "__main__":
     runningDays = int(input ("How many days do you want the simulation to run? "))
     n = Neutral(0, 1)
-    h = Hostile(0, 0, 0)
-    t = Tree(0)
+    h = Hostile(0, 0, 1)
+    t = Tree([])
     i = 1
-    while i <= runningDays:
-        t.randomTree()
-        t.genRandomFood()
-        n.moveToTree()
-        n.surviveAndReplicate()
+    while i <= runningDays:   
+        t.genTreesAndFood()
+        #h.moveToTreeH()
+        #h.surviveAndReplicateH()   
+        n.moveToTreeN()
+        n.surviveAndReplicateN()
         if n.lifeCount == 1:
             print("There is currently " + str(int (n.lifeCount)) + " neutral alive. (Day " + str(i) + ")")
         else:
             print("There are currently " + str(int (n.lifeCount)) + " neutrals alive. (Day " + str(i) + ")")
-        i += 1
         
+        #if h.lifeCount == 1:
+            #print("There is currently " + str(int (h.lifeCount)) + " hostile alive. (Day " + str(i) + ")")
+        #else:
+            #print("There are currently " + str(int (h.lifeCount)) + " hostiles alive. (Day " + str(i) + ")")
+        i += 1
+        print (t.listOfTreesAndFood)
+        t.listOfTreesAndFood = []
+        n.foodSupply = 0    
