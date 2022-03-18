@@ -23,7 +23,7 @@ class Neutral:
             t.genRandomFood()
             n.foodSupply += t.food 
             j -= 1
-            print (n.foodSupply)
+            
     
     def surviveAndReplicate(self):
         cache = n.foodSupply - n.lifeCount
@@ -77,11 +77,15 @@ if __name__ == "__main__":
     n = Neutral(0, 1)
     h = Hostile(0, 0, 0)
     t = Tree(0)
-    while runningDays > 0:
+    i = 1
+    while i <= runningDays:
         t.randomTree()
         t.genRandomFood()
         n.moveToTree()
         n.surviveAndReplicate()
-        print("There are currently " + str(n.lifeCount) + " neutrals alive. (Day " + str(runningDays) + ")")
-        runningDays -= 1
+        if n.lifeCount == 1:
+            print("There is currently " + str(int (n.lifeCount)) + " neutral alive. (Day " + str(i) + ")")
+        else:
+            print("There are currently " + str(int (n.lifeCount)) + " neutrals alive. (Day " + str(i) + ")")
+        i += 1
         
