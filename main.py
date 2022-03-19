@@ -69,12 +69,12 @@ if __name__ == "__main__":
         if n.lifeCount == 1:
             print("There is currently " + str(int (n.lifeCount)) + " neutral alive. (Day " + str(i) + ")")
             resultsFile = open("resultsFile.txt", "a")
-            resultsFile.write(str(int(n.lifeCount)) + "\n")
+            resultsFile.write(str(int(n.lifeCount)) + ", ")
             resultsFile.close()
         else:
             print("There are currently " + str(int (n.lifeCount)) + " neutrals alive. (Day " + str(i) + ")")
             resultsFile = open("resultsFile.txt", "a")
-            resultsFile.write(str(int(n.lifeCount)) + "\n")
+            resultsFile.write(str(int(n.lifeCount)) + ", ")
             resultsFile.close()
         
         i += 1
