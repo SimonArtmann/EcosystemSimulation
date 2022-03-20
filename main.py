@@ -1,15 +1,4 @@
-# 2 species: neutral; hostile
-# neutral: 1 apple to survive, 5 to replicate
-# hostile: 1 apple to survive, 3 kills to replicate
-# 2 hostile on 1 tree = both dead
-# 2 passive on 1 tree = share
-# hostile attacks -> loses 10 apples
-# every tree drops 1-7 apples; set number of trees
-# set number of days running, after every day number of survivors is displayed
-# (predators); if attacked by hostile, 99% chance to survive, needs 1 per 10 gens #to replicate
-#Ausgabewerte von genRandom in Liste speichern, wenn gleiche Zahl nacheinander -> #Attack
 import random
-
 
 class Neutral:
     def __init__(self, foodSupply, lifeCount):
@@ -40,8 +29,13 @@ class Tree:
 
     def genTreesAndFood(self):
         i = 0 
+        #tempRand = random.randint(20, 30)
         for i in range(50):
-            rand = random.randint(1, 7)
+            temp = 30
+            if temp < 25:    
+                rand = random.randint(1, 4)
+            else:
+                rand = random.randint(3, 6)
             t.listOfTreesAndFood.append(rand)
             i += 1
 
@@ -60,7 +54,7 @@ def setTreesBack():
 if __name__ == "__main__":
     runningDays = int(input ("How many days do you want the simulation to run? "))
     n = Neutral(0, 1)
-    t = Tree([])
+    t = Tree([]) 
     i = 1
     while i <= runningDays:   
         t.genTreesAndFood()   
